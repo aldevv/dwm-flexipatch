@@ -6,7 +6,7 @@ static const unsigned int borderpx       = 0;   /* border pixel of windows */
 static const int corner_radius           = 10;
 #else
 // it was 2
-static const unsigned int borderpx       = 1;   /* border pixel of windows */
+static const unsigned int borderpx       = 2;   /* border pixel of windows */
 #endif // ROUNDED_CORNERS_PATCH
 static const unsigned int snap           = 32;  /* snap pixel */
 #if SWALLOW_PATCH
@@ -160,10 +160,10 @@ static const char font[]                 = "monospace 10";
 #else
 static const char *fonts[]               = { 
     // "NotoColorEmoji:pixelsize=11:antialias=true:autohint=true", // Unicode (emojis)
-    "Symbola:pixelsize=14:antialias=true:autohint=true", // Unicode (emojis)
-    "JoyPixels:pixelsize=10:antialias=true:autohint=true",
-    // "Noto Sans Emoji:pixelsize=14:antialias=true:autohint=true", // Unicode (emojis)
-    "monospace:size=10" 
+    "Noto Sans Emoji:pixelsize=11:antialias=true:autohint=true", // Unicode (emojis)
+    "Symbola:pixelsize=11:antialias=true:autohint=true", // Unicode (emojis)
+    "JoyPixels:pixelsize=11:antialias=true:autohint=true",
+    "monospace:size=11" 
 };
 #endif // BAR_PANGO_PATCH
 static const char dmenufont[]       = "Fira Code Nerd Font:size=10";
@@ -410,11 +410,11 @@ static const char *const autostart[] = {
 #endif // COOL_AUTOSTART_PATCH
 
 #if RENAMED_SCRATCHPADS_PATCH
-static const char *scratchpadcmd[] = {"s", "st", "-n", "spterm", "-g", "800x600", NULL};
+static const char *scratchpadcmd[] = {"s", "st", "-n", "spterm", "-g", "120x34", NULL};
 #elif SCRATCHPADS_PATCH
-// const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
+const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
 
-const char *spcmd1[] = {"st", "-n", "spterm", "-f", "monospace:size=8", NULL };
+// const char *spcmd1[] = {"st", "-n", "spterm", "-f", "monospace:size=8", NULL };
 const char *spcmd2[] = {"st", "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
 const char *spcmd3[] = {"st", "-n", "spman", "-f", "monospace:size=10", "-e", "bash", "-c", "searchManPage;$SHELL",  NULL };
 const char *spcmd4[] = {"st", "-n", "sptab", "-f", "monospace:size=10", "-e", "bash", "-c", "searchManPageTableContents;$SHELL",  NULL };
@@ -518,13 +518,16 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
 	RULE(.class = "Gimp", .tags = 1 << 5)
 	RULE(.class = "firefox", .tags = 1 << 0)
-	RULE(.class = "Slack", .tags = 1 << 7)
+	RULE(.class = "Slack", .tags = 1 << 5)
+	RULE(.class = "copyq", .isfloating = 1)
+	RULE(.class = "Workspacesclient", .isfloating = 0, .tags = 1 << 2)
+
     // this one works
 	// RULE(.class = "firefox", .tags = 1 << 1, .isfloating = 1, .floatpos = "50% 50% 200W 200H")
 	// { "firefox",  NULL,     NULL,           1 << 1,      0,          0,           0,        -1,  "50% 50% 800W 800H"    },
 
 	#if RENAMED_SCRATCHPADS_PATCH
-	    RULE(.instance = "spterm", .scratchkey = 's', .isfloating = 1)
+	    RULE(.instance = "spterm", .scratchkey = 's', .isfloating = 1, .floatpos = "50% 50% 1000W 600H")
 	#elif SCRATCHPADS_PATCH
 	    RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 
@@ -1148,9 +1151,9 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Escape,     togglenomodbuttons,     {0} },
 	#endif // NO_MOD_BUTTONS_PATCH
 	#if RENAMED_SCRATCHPADS_PATCH
-	{ MODKEY,                       XK_a,       togglescratch,          {.v = scratchpadcmd } },
-	{ MODKEY|ControlMask,           XK_grave,      setscratch,             {.v = scratchpadcmd } },
-	{ MODKEY|ShiftMask,             XK_grave,      removescratch,          {.v = scratchpadcmd } },
+	{ MODKEY,                       XK_c,       togglescratch,          {.v = scratchpadcmd } },
+	// { MODKEY|ControlMask,           XK_grave,      setscratch,             {.v = scratchpadcmd } },
+	// { MODKEY|ShiftMask,             XK_grave,      removescratch,          {.v = scratchpadcmd } },
 	#elif SCRATCHPADS_PATCH
 	{ MODKEY,                       XK_c,      togglescratch,          {.ui = 0 } },
 	{ MODKEY|ShiftMask,             XK_c,      togglescratch,          {.ui = 1 } },
